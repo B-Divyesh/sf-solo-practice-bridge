@@ -212,18 +212,18 @@
       "degree": 8
     },
     {
-      "id": "package_scripts",
-      "label": "scripts",
-      "degree": 7
-    },
-    {
-      "id": "src_db_saveplan",
-      "label": "savePlan()",
+      "id": "src_main_archiveplan",
+      "label": "archivePlan()",
       "degree": 7
     },
     {
       "id": "src_main_escapehtml",
       "label": "escapeHtml()",
+      "degree": 7
+    },
+    {
+      "id": "src_main_rendertimer",
+      "label": "renderTimer()",
       "degree": 7
     },
     {
@@ -233,17 +233,6 @@
     }
   ],
   "surprises": [
-    {
-      "source": "init()",
-      "target": "loadData()",
-      "source_files": [
-        "src/main.ts",
-        "src/db.ts"
-      ],
-      "confidence": "EXTRACTED",
-      "relation": "calls",
-      "why": "bridges separate communities"
-    },
     {
       "source": "archivePlan()",
       "target": "savePlan()",
@@ -256,8 +245,8 @@
       "why": "bridges separate communities"
     },
     {
-      "source": "submitPlan()",
-      "target": "savePlan()",
+      "source": "importFile()",
+      "target": "replaceData()",
       "source_files": [
         "src/main.ts",
         "src/db.ts"
@@ -267,8 +256,8 @@
       "why": "bridges separate communities"
     },
     {
-      "source": "undoArchive()",
-      "target": "savePlan()",
+      "source": "init()",
+      "target": "loadData()",
       "source_files": [
         "src/main.ts",
         "src/db.ts"
@@ -278,11 +267,22 @@
       "why": "bridges separate communities"
     },
     {
-      "source": "submitReflection()",
-      "target": "saveSession()",
+      "source": "init()",
+      "target": "verifyLicense()",
       "source_files": [
         "src/main.ts",
-        "src/db.ts"
+        "src/license.ts"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "bridges separate communities"
+    },
+    {
+      "source": "statusMarkup()",
+      "target": "isUnlocked()",
+      "source_files": [
+        "src/main.ts",
+        "src/license.ts"
       ],
       "confidence": "EXTRACTED",
       "relation": "calls",
