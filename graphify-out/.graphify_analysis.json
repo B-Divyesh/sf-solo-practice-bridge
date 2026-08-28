@@ -241,8 +241,8 @@
       "degree": 7
     },
     {
-      "id": "src_main_escapehtml",
-      "label": "escapeHtml()",
+      "id": "src_db_saveplan",
+      "label": "savePlan()",
       "degree": 7
     }
   ],
@@ -292,8 +292,8 @@
       "why": "bridges separate communities"
     },
     {
-      "source": "openNewPlan()",
-      "target": "isUnlocked()",
+      "source": "init()",
+      "target": "captureLicenseFromUrl()",
       "source_files": [
         "src/main.ts",
         "src/license.ts"
