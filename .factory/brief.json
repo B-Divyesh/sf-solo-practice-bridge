@@ -1,0 +1,12 @@
+{
+  "slug": "solo-practice-bridge",
+  "title": "Solo Practice Bridge",
+  "territory": "games-creative",
+  "user": "Intermediate self-taught musicians who have lost regular teacher feedback and need a modest, non-AI plan that connects drills to pieces they actually want to play.",
+  "smallest_useful_product": "Local web workbook with a repertoire goal, one observed obstacle, a timed drill/piece alternation, success cue, spaced revisit dates, and printable teacher-ready history. Non-goals: audio grading, generated lessons, subscriptions to a content catalog, or replacing a teacher.",
+  "success_measure": "After four weeks, 60% of pilot users complete eight planned sessions and can name at least one drill-to-piece transfer they recorded.",
+  "artifact_class": "pwa-offline",
+  "monetization": "one-time",
+  "constraints": "No claims of pedagogical diagnosis; user enters all musical content; private by default; support accessibility-friendly timing and print export.",
+  "state": "RESEARCHED"
+}
