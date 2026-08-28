@@ -39,7 +39,7 @@ Additional local production-preview checks passed:
 
 ## Deployment
 
-The repository has no deployment workflow or provider configuration; its documented static deployment contract is to publish `dist/` and the factory owns infrastructure. The repair is pushed to `main` for the factory static deployment. After propagation, verify that live `/sw.js` contains `bridge-v6`, then accept the in-app **Update now** prompt in an already-installed client.
+The repository has no deployment workflow or provider configuration; its documented static deployment contract is to publish `dist/` and the factory owns infrastructure. Repair commit `5d094c15e60c95f2b08fdb88ee673e157f91f9d9` was pushed to `main`. The factory deployment/status API remained `pending` with no configured status provider, and the live `/sw.js` still reported `bridge-v5` during the final check. Deployment therefore remains pending outside this repository; after propagation, verify live `/sw.js` contains `bridge-v6`, then accept the in-app **Update now** prompt in an already-installed client.
 
 ## Known gaps / next steps
 
