@@ -221,8 +221,8 @@
       "degree": 9
     },
     {
-      "id": "src_main_importfile",
-      "label": "importFile()",
+      "id": "src_domain_ispracticeplan",
+      "label": "isPracticePlan()",
       "degree": 8
     },
     {
@@ -231,13 +231,13 @@
       "degree": 8
     },
     {
-      "id": "src_domain_ispracticeplan",
-      "label": "isPracticePlan()",
+      "id": "src_main_importfile",
+      "label": "importFile()",
       "degree": 8
     },
     {
-      "id": "src_main_archiveplan",
-      "label": "archivePlan()",
+      "id": "src_domain_ispracticesession",
+      "label": "isPracticeSession()",
       "degree": 7
     },
     {
@@ -248,33 +248,33 @@
   ],
   "surprises": [
     {
-      "source": "init()",
-      "target": "captureLicenseFromUrl()",
+      "source": "submitPlan()",
+      "target": "createPlan()",
       "source_files": [
         "src/main.ts",
-        "src/license.ts"
+        "src/domain.ts"
       ],
       "confidence": "EXTRACTED",
       "relation": "calls",
       "why": "bridges separate communities"
     },
     {
-      "source": "archivePlan()",
-      "target": "savePlan()",
+      "source": "statusMarkup()",
+      "target": "nextRevisit()",
       "source_files": [
         "src/main.ts",
-        "src/db.ts"
+        "src/domain.ts"
       ],
       "confidence": "EXTRACTED",
       "relation": "calls",
       "why": "bridges separate communities"
     },
     {
-      "source": "importFile()",
-      "target": "replaceData()",
+      "source": "bindEvents()",
+      "target": "toCsv()",
       "source_files": [
         "src/main.ts",
-        "src/db.ts"
+        "src/domain.ts"
       ],
       "confidence": "EXTRACTED",
       "relation": "calls",
@@ -292,11 +292,11 @@
       "why": "bridges separate communities"
     },
     {
-      "source": "init()",
-      "target": "loadData()",
+      "source": "openNewPlan()",
+      "target": "isUnlocked()",
       "source_files": [
         "src/main.ts",
-        "src/db.ts"
+        "src/license.ts"
       ],
       "confidence": "EXTRACTED",
       "relation": "calls",
