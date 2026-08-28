@@ -178,7 +178,7 @@ textarea { min-height: 96px; resize: vertical; }
   .plan-tools { justify-content: space-between; }
   .bridge-grid { grid-template-columns: 1fr; }
   .bridge-joint { min-height: 62px; border-inline: 0; border-block: var(--rule); transform: none; }
-  .bridge-joint span { transform: rotate(90deg); }
+  .bridge-joint .bridge-arrow { transform: rotate(90deg); }
   .practice-bar { align-items: stretch; flex-direction: column; }
   .progress-wrap { max-width: none; }
   .history-item { grid-template-columns: 1fr; gap: 5px; }

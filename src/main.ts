@@ -144,7 +144,7 @@ function planMarkup(plan: PracticePlan): string {
           <div class="step"><span class="step-label">01 · Observed obstacle</span><p class="step-text">${escapeHtml(plan.obstacle)}</p></div>
           <div class="step"><span class="step-label">02 · Drill for ${plan.drillMinutes} min</span><p class="step-text">${escapeHtml(plan.drill)}</p></div>
         </div>
-        <div class="bridge-joint" aria-label="Then return to the piece"><span aria-hidden="true">→</span></div>
+        <div class="bridge-joint"><span class="bridge-arrow" aria-hidden="true">→</span><span class="visually-hidden">Then return to the piece</span></div>
         <div class="bridge-side">
           <div class="step"><span class="step-label">03 · Return for ${plan.pieceMinutes} min</span><p class="step-text">Play the same passage in context. Keep the drill’s single idea in view.</p></div>
           <div class="step"><span class="step-label">04 · Success cue</span><p class="step-text">${escapeHtml(plan.successCue)}</p></div>

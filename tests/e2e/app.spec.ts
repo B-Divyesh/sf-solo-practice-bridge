@@ -41,6 +41,19 @@ test('has no serious or critical accessibility violations', async ({ page }) => 
   await expect(page.getByRole('dialog', { name: 'Build one bridge' })).toBeVisible();
   await page.keyboard.press('Escape');
   await expect(page.getByRole('dialog', { name: 'Build one bridge' })).toBeHidden();
+
+  await createButton.click();
+  await page.getByLabel('Piece or passage').fill('Autumn Leaves, bars 17–24');
+  await page.getByLabel('What do you want to become easier?').fill('Keep the phrase connected');
+  await page.getByLabel('What do you observe getting in the way?').fill('The position shift interrupts the line');
+  await page.getByLabel('Your small drill').fill('Loop the shift at 64 bpm with a quiet thumb');
+  await page.getByLabel('Success cue').fill('Three relaxed repeats');
+  await page.getByRole('button', { name: 'Save this bridge' }).click();
+  await expect(page.getByRole('heading', { name: 'Autumn Leaves, bars 17–24' })).toBeVisible();
+  const connector = page.locator('.bridge-joint');
+  await expect(connector).toContainText('Then return to the piece');
+  await expect(connector).not.toHaveAttribute('aria-label');
+
   const results = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa']).analyze();
   expect(results.violations.filter((violation) => ['serious', 'critical'].includes(violation.impact ?? ''))).toEqual([]);
   expect(browserErrors).toEqual([]);
