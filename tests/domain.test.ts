@@ -25,8 +25,14 @@ describe('practice domain', () => {
     expect(csv).toContain('"Felt ""lighter"", twice"');
   });
 
-  it('rejects an unrelated import and accepts a versioned backup', () => {
+  it('rejects incomplete imports and accepts only a complete versioned backup', () => {
     expect(() => validateImport({ plans: [] })).toThrow(/supported Bridge export/);
-    expect(validateImport({ version: 1, exportedAt: 'now', plans: [plan], sessions: [session] }).plans).toHaveLength(1);
+    expect(() => validateImport({
+      version: 1,
+      exportedAt: '2026-08-28T00:00:00.000Z',
+      plans: [{ id: 'malformed-plan', piece: 'Broken Import', drill: 'one note' }],
+      sessions: []
+    })).toThrow(/incomplete or invalid/);
+    expect(validateImport({ version: 1, exportedAt: '2026-08-28T00:00:00.000Z', plans: [plan], sessions: [session] }).plans).toHaveLength(1);
   });
 });

@@ -53,3 +53,41 @@ test('legal pages are directly addressable', async ({ page }) => {
   await page.goto('/terms/');
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Terms of use.');
 });
+
+test('rejects a malformed backup before replacement and keeps the workbook usable after reload', async ({ page }) => {
+  const pageErrors: string[] = [];
+  let replacementConfirmationShown = false;
+  page.on('pageerror', (error) => pageErrors.push(error.message));
+  page.on('dialog', async (dialog) => {
+    replacementConfirmationShown = true;
+    await dialog.accept();
+  });
+
+  await page.goto('/');
+  await page.getByRole('button', { name: 'Build a practice bridge' }).first().click();
+  await page.getByLabel('Piece or passage').fill('Existing bridge');
+  await page.getByLabel('What do you want to become easier?').fill('Keep the line even');
+  await page.getByLabel('What do you observe getting in the way?').fill('The shift catches');
+  await page.getByLabel('Your small drill').fill('Loop two notes slowly');
+  await page.getByLabel('Success cue').fill('Three loose repeats');
+  await page.getByRole('button', { name: 'Save this bridge' }).click();
+
+  await page.getByLabel('Import backup').setInputFiles({
+    name: 'malformed-backup.json',
+    mimeType: 'application/json',
+    buffer: Buffer.from(JSON.stringify({
+      version: 1,
+      exportedAt: '2026-08-28T00:00:00.000Z',
+      plans: [{ id: 'malformed-plan', piece: 'Broken Import', drill: 'one note' }],
+      sessions: []
+    }))
+  });
+
+  await expect(page.getByText('Import did not work.')).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Existing bridge' })).toBeVisible();
+  expect(replacementConfirmationShown).toBe(false);
+
+  await page.reload();
+  await expect(page.getByRole('heading', { name: 'Existing bridge' })).toBeVisible();
+  expect(pageErrors).toEqual([]);
+});

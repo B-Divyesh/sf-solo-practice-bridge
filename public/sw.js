@@ -1,4 +1,4 @@
-const VERSION = 'bridge-v5';
+const VERSION = 'bridge-v6';
 const SHELL = `${VERSION}-shell`;
 const RUNTIME = `${VERSION}-runtime`;
 const PRECACHE = ['/?v=1', '/offline.html', '/manifest.webmanifest', '/icon-192.png', '/icon-512.png', '/assets/bridge-hero.webp', '/assets/main.js', '/assets/legal.js', '/assets/style.js', '/assets/style.css'];
