@@ -1,4 +1,4 @@
-const VERSION = 'bridge-v4';
+const VERSION = 'bridge-v5';
 const SHELL = `${VERSION}-shell`;
 const RUNTIME = `${VERSION}-runtime`;
 const PRECACHE = ['/?v=1', '/offline.html', '/manifest.webmanifest', '/icon-192.png', '/icon-512.png', '/assets/bridge-hero.webp', '/assets/main.js', '/assets/legal.js', '/assets/style.js', '/assets/style.css'];
@@ -48,12 +48,12 @@ self.addEventListener('fetch', (event) => {
       const copy = response.clone();
       caches.open(RUNTIME).then((cache) => cache.put(request, copy));
       return response;
-    }).catch(async () => (await caches.match(request)) || (await caches.match('/')) || caches.match('/offline.html')));
+    }).catch(async () => (await caches.match(request, { ignoreVary: true })) || (await caches.match('/', { ignoreVary: true })) || caches.match('/offline.html', { ignoreVary: true })));
     return;
   }
 
   if (['script', 'style', 'image', 'font'].includes(request.destination)) {
-    event.respondWith(caches.match(request).then((cached) => cached || fetch(request).then((response) => {
+    event.respondWith(caches.match(request, { ignoreVary: true }).then((cached) => cached || fetch(request).then((response) => {
       const copy = response.clone();
       caches.open(RUNTIME).then((cache) => cache.put(request, copy));
       return response;
