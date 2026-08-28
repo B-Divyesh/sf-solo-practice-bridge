@@ -1,6 +1,35 @@
 {
   "communities": {
     "0": [
+      "src_domain",
+      "src_domain_createplan",
+      "src_domain_escapecsv",
+      "src_domain_free_active_limit",
+      "src_domain_isisodate",
+      "src_domain_isisodatetime",
+      "src_domain_isnonemptystring",
+      "src_domain_ispracticeplan",
+      "src_domain_ispracticesession",
+      "src_domain_isrecord",
+      "src_domain_istext",
+      "src_domain_iswholenumberinrange",
+      "src_domain_makerevisitdates",
+      "src_domain_nextrevisit",
+      "src_domain_session_target",
+      "src_domain_sessionprogress",
+      "src_domain_tocsv",
+      "src_domain_validateimport",
+      "src_main_formatdate",
+      "src_main_planmarkup",
+      "src_types",
+      "src_types_bridgedata",
+      "src_types_practiceplan",
+      "src_types_practicesession",
+      "tests_domain_test",
+      "tests_domain_test_plan",
+      "tests_domain_test_session"
+    ],
+    "1": [
       "ref_dom",
       "ref_dom_iterable",
       "ref_es2022",
@@ -27,51 +56,7 @@
       "tsconfig_compileroptions_usedefineforclassfields",
       "tsconfig_include"
     ],
-    "1": [
-      "src_domain_nextrevisit",
-      "src_domain_sessionprogress",
-      "src_domain_validateimport",
-      "src_license_capturelicensefromurl",
-      "src_main",
-      "src_main_activeplans",
-      "src_main_archiveplan",
-      "src_main_escapehtml",
-      "src_main_formatdate",
-      "src_main_formatdatetime",
-      "src_main_importfile",
-      "src_main_init",
-      "src_main_markup",
-      "src_main_planmarkup",
-      "src_main_plans",
-      "src_main_registerserviceworker",
-      "src_main_renderall",
-      "src_main_renderhistory",
-      "src_main_renderworkspace",
-      "src_main_sessions",
-      "src_main_setnetworkstatus",
-      "src_main_showtoast",
-      "src_main_showupdate",
-      "src_main_statusmarkup"
-    ],
     "2": [
-      "src_main_advancetimer",
-      "src_main_announce",
-      "src_main_bindevents",
-      "src_main_closedialog",
-      "src_main_download",
-      "src_main_exportjson",
-      "src_main_formatclock",
-      "src_main_opendialog",
-      "src_main_opennewplan",
-      "src_main_opentimer",
-      "src_main_rendertimer",
-      "src_main_stoptimer",
-      "src_main_submitreflection",
-      "src_main_tick",
-      "src_main_toggletimer",
-      "src_main_undoarchive"
-    ],
-    "3": [
       "package",
       "package_axe_core_playwright_playwright_core",
       "package_name",
@@ -88,24 +73,7 @@
       "package_type",
       "package_version"
     ],
-    "4": [
-      "src_domain",
-      "src_domain_createplan",
-      "src_domain_escapecsv",
-      "src_domain_free_active_limit",
-      "src_domain_makerevisitdates",
-      "src_domain_session_target",
-      "src_domain_tocsv",
-      "src_main_submitplan",
-      "src_types",
-      "src_types_bridgedata",
-      "src_types_practiceplan",
-      "src_types_practicesession",
-      "tests_domain_test",
-      "tests_domain_test_plan",
-      "tests_domain_test_session"
-    ],
-    "5": [
+    "3": [
       "axe_core_playwright",
       "package_devdependencies",
       "package_devdependencies_axe_core_playwright",
@@ -120,9 +88,39 @@
       "vite",
       "vitest"
     ],
+    "4": [
+      "src_main",
+      "src_main_activeplans",
+      "src_main_escapehtml",
+      "src_main_formatdatetime",
+      "src_main_opendialog",
+      "src_main_opennewplan",
+      "src_main_opentimer",
+      "src_main_plans",
+      "src_main_renderhistory",
+      "src_main_renderworkspace",
+      "src_main_sessions",
+      "src_main_statusmarkup",
+      "src_main_stoptimer"
+    ],
+    "5": [
+      "src_main_announce",
+      "src_main_archiveplan",
+      "src_main_bindevents",
+      "src_main_closedialog",
+      "src_main_download",
+      "src_main_exportjson",
+      "src_main_importfile",
+      "src_main_renderall",
+      "src_main_restorelicense",
+      "src_main_submitplan",
+      "src_main_submitreflection",
+      "src_main_undoarchive"
+    ],
     "6": [
       "src_license",
       "src_license_cachedlicense",
+      "src_license_capturelicensefromurl",
       "src_license_checkouturl",
       "src_license_clearlicense",
       "src_license_isunlocked",
@@ -130,7 +128,6 @@
       "src_license_storetoken",
       "src_license_verifylicense",
       "src_main_renderunlock",
-      "src_main_restorelicense",
       "src_types_licensestate"
     ],
     "7": [
@@ -144,41 +141,58 @@
       "src_db_savesession"
     ],
     "8": [
+      "src_main_init",
+      "src_main_markup",
+      "src_main_registerserviceworker",
+      "src_main_setnetworkstatus",
+      "src_main_showtoast",
+      "src_main_showupdate"
+    ],
+    "9": [
+      "src_main_advancetimer",
+      "src_main_formatclock",
+      "src_main_rendertimer",
+      "src_main_tick",
+      "src_main_toggletimer"
+    ],
+    "10": [
       "public_sw",
       "public_sw_precache",
       "public_sw_precacheshell"
     ],
-    "9": [
+    "11": [
       "playwright_config"
     ],
-    "10": [
+    "12": [
       "src_legal"
     ],
-    "11": [
+    "13": [
       "tests_e2e_app_spec"
     ],
-    "12": [
+    "14": [
       "vite_config"
     ],
-    "13": [
+    "15": [
       "vitest_config"
     ]
   },
   "cohesion": {
-    "0": 0.08,
-    "1": 0.18478260869565216,
-    "2": 0.21666666666666667,
-    "3": 0.13333333333333333,
-    "4": 0.23809523809523808,
-    "5": 0.15384615384615385,
-    "6": 0.2909090909090909,
+    "0": 0.16524216524216523,
+    "1": 0.08,
+    "2": 0.13333333333333333,
+    "3": 0.15384615384615385,
+    "4": 0.28205128205128205,
+    "5": 0.3939393939393939,
+    "6": 0.2727272727272727,
     "7": 0.5357142857142857,
-    "8": 0.6666666666666666,
-    "9": 1.0,
-    "10": 1.0,
+    "8": 0.3333333333333333,
+    "9": 0.6,
+    "10": 0.6666666666666666,
     "11": 1.0,
     "12": 1.0,
-    "13": 1.0
+    "13": 1.0,
+    "14": 1.0,
+    "15": 1.0
   },
   "gods": [
     {
@@ -212,6 +226,16 @@
       "degree": 8
     },
     {
+      "id": "src_domain_validateimport",
+      "label": "validateImport()",
+      "degree": 8
+    },
+    {
+      "id": "src_domain_ispracticeplan",
+      "label": "isPracticePlan()",
+      "degree": 8
+    },
+    {
       "id": "src_main_archiveplan",
       "label": "archivePlan()",
       "degree": 7
@@ -220,19 +244,20 @@
       "id": "src_main_escapehtml",
       "label": "escapeHtml()",
       "degree": 7
-    },
-    {
-      "id": "src_main_rendertimer",
-      "label": "renderTimer()",
-      "degree": 7
-    },
-    {
-      "id": "src_main_submitplan",
-      "label": "submitPlan()",
-      "degree": 7
     }
   ],
   "surprises": [
+    {
+      "source": "init()",
+      "target": "captureLicenseFromUrl()",
+      "source_files": [
+        "src/main.ts",
+        "src/license.ts"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "bridges separate communities"
+    },
     {
       "source": "archivePlan()",
       "target": "savePlan()",
@@ -256,33 +281,22 @@
       "why": "bridges separate communities"
     },
     {
+      "source": "importFile()",
+      "target": "validateImport()",
+      "source_files": [
+        "src/main.ts",
+        "src/domain.ts"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "bridges separate communities"
+    },
+    {
       "source": "init()",
       "target": "loadData()",
       "source_files": [
         "src/main.ts",
         "src/db.ts"
-      ],
-      "confidence": "EXTRACTED",
-      "relation": "calls",
-      "why": "bridges separate communities"
-    },
-    {
-      "source": "init()",
-      "target": "verifyLicense()",
-      "source_files": [
-        "src/main.ts",
-        "src/license.ts"
-      ],
-      "confidence": "EXTRACTED",
-      "relation": "calls",
-      "why": "bridges separate communities"
-    },
-    {
-      "source": "statusMarkup()",
-      "target": "isUnlocked()",
-      "source_files": [
-        "src/main.ts",
-        "src/license.ts"
       ],
       "confidence": "EXTRACTED",
       "relation": "calls",
