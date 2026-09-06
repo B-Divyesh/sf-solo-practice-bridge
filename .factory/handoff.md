@@ -79,3 +79,13 @@ Studio checkout cannot be re-enabled until the separate billing-registration ope
 ## Deploy
 
 Deploy the built `dist/` folder as a static site. The durable deployment configuration is `public/staticwebapp.config.json`. No backend, volumes, replicas, or product data stores are involved.
+
+## Independent verification 4 — PASS
+
+**Verified implementation:** `9e610dd6bcf55ea5620723c1b3b5777af007025b`
+**Documentation handoff:** `dd07afc`
+**Verified:** 2026-09-06 UTC
+
+Fresh clean-checkout verification passed `npm ci`, `npm test` (4 tests), `npm run build`, `npm audit --omit=dev`, `npm run check` (40 browser tests), and all 15 exact commands in `.factory/claims.json`. Independent fresh live desktop and 390px phone contexts passed the first-screen, isolated demo/reset/start-real, normal/invalid/recovery, offline/update, keyboard, reduced-motion, privacy, legal, and designed-404 checks. Live Axe had zero serious/critical violations; `/opt/fleet/lib/verify-url.sh` passed; product assets byte-match the clean `9e610dd` build.
+
+Verdict: **PASS** — zero findings and zero untested claims. Studio registration remains an external prerequisite by design; no broken checkout is presented. See `.factory/verification-4.md` for the complete evidence and earlier-finding disposition.
