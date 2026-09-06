@@ -2,8 +2,6 @@
   "communities": {
     "0": [
       "src_license_capturelicensefromurl",
-      "src_license_clearlicense",
-      "src_license_storetoken",
       "src_main",
       "src_main_advancetimer",
       "src_main_announce",
@@ -96,6 +94,24 @@
       "tests_domain_test_session"
     ],
     "3": [
+      "src_domain_nextrevisit",
+      "src_domain_sessionprogress",
+      "src_license",
+      "src_license_cachedlicense",
+      "src_license_clearlicense",
+      "src_license_isunlocked",
+      "src_license_storedtoken",
+      "src_license_storetoken",
+      "src_license_verifylicense",
+      "src_main_activeplans",
+      "src_main_formatdate",
+      "src_main_planmarkup",
+      "src_main_renderunlock",
+      "src_main_renderworkspace",
+      "src_main_statusmarkup",
+      "src_types_licensestate"
+    ],
+    "4": [
       "package",
       "package_axe_core_playwright_playwright_core",
       "package_name",
@@ -112,7 +128,7 @@
       "package_type",
       "package_version"
     ],
-    "4": [
+    "5": [
       "axe_core_playwright",
       "package_devdependencies",
       "package_devdependencies_axe_core_playwright",
@@ -127,7 +143,7 @@
       "vite",
       "vitest"
     ],
-    "5": [
+    "6": [
       "public_manifest",
       "public_manifest_background_color",
       "public_manifest_description",
@@ -141,7 +157,7 @@
       "public_manifest_start_url",
       "public_manifest_theme_color"
     ],
-    "6": [
+    "7": [
       "src_db",
       "src_db_complete",
       "src_db_databasename",
@@ -154,25 +170,7 @@
       "src_db_savesession",
       "src_db_storagenamespace"
     ],
-    "7": [
-      "src_domain_nextrevisit",
-      "src_domain_sessionprogress",
-      "src_main_activeplans",
-      "src_main_formatdate",
-      "src_main_planmarkup",
-      "src_main_renderworkspace",
-      "src_main_statusmarkup"
-    ],
     "8": [
-      "src_license",
-      "src_license_cachedlicense",
-      "src_license_isunlocked",
-      "src_license_storedtoken",
-      "src_license_verifylicense",
-      "src_main_renderunlock",
-      "src_types_licensestate"
-    ],
-    "9": [
       "scripts_serve_dist",
       "scripts_serve_dist_headers",
       "scripts_serve_dist_port",
@@ -180,55 +178,53 @@
       "scripts_serve_dist_safefile",
       "scripts_serve_dist_types"
     ],
-    "10": [
+    "9": [
       "public_sw",
       "public_sw_addfresh",
       "public_sw_pages",
       "public_sw_precacheshell",
       "public_sw_static_files"
     ],
-    "11": [
+    "10": [
       "tests_e2e_claims_spec",
       "tests_e2e_claims_spec_downloadedtext",
       "tests_e2e_claims_spec_opendemo",
       "tests_e2e_claims_spec_recorddemotransfer"
     ],
-    "12": [
-      "test",
+    "11": [
       "tests_e2e_app_spec",
       "tests_e2e_app_spec_createbridge"
     ],
-    "13": [
+    "12": [
       "playwright_config"
     ],
-    "14": [
+    "13": [
       "src_legal"
     ],
-    "15": [
+    "14": [
       "vite_config"
     ],
-    "16": [
+    "15": [
       "vitest_config"
     ]
   },
   "cohesion": {
-    "0": 0.14304993252361672,
+    "0": 0.15315315315315314,
     "1": 0.08,
     "2": 0.19666666666666666,
-    "3": 0.13333333333333333,
-    "4": 0.15384615384615385,
-    "5": 0.16666666666666666,
-    "6": 0.36363636363636365,
-    "7": 0.38095238095238093,
-    "8": 0.5238095238095238,
-    "9": 0.3333333333333333,
+    "3": 0.18333333333333332,
+    "4": 0.13333333333333333,
+    "5": 0.15384615384615385,
+    "6": 0.16666666666666666,
+    "7": 0.36363636363636365,
+    "8": 0.3333333333333333,
+    "9": 0.5,
     "10": 0.5,
-    "11": 0.5,
-    "12": 0.6666666666666666,
+    "11": 1.0,
+    "12": 1.0,
     "13": 1.0,
     "14": 1.0,
-    "15": 1.0,
-    "16": 1.0
+    "15": 1.0
   },
   "gods": [
     {
@@ -262,16 +258,6 @@
       "degree": 9
     },
     {
-      "id": "src_domain_ispracticeplan",
-      "label": "isPracticePlan()",
-      "degree": 8
-    },
-    {
-      "id": "src_domain_validateimport",
-      "label": "validateImport()",
-      "degree": 8
-    },
-    {
       "id": "src_main_escapehtml",
       "label": "escapeHtml()",
       "degree": 8
@@ -280,15 +266,47 @@
       "id": "src_main_importfile",
       "label": "importFile()",
       "degree": 8
+    },
+    {
+      "id": "src_domain_ispracticeplan",
+      "label": "isPracticePlan()",
+      "degree": 8
+    },
+    {
+      "id": "src_domain_validateimport",
+      "label": "validateImport()",
+      "degree": 8
     }
   ],
   "surprises": [
     {
-      "source": "submitPlan()",
-      "target": "createPlan()",
+      "source": "bindEvents()",
+      "target": "clearLicense()",
       "source_files": [
         "src/main.ts",
-        "src/domain.ts"
+        "src/license.ts"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "bridges separate communities"
+    },
+    {
+      "source": "restoreLicense()",
+      "target": "storeToken()",
+      "source_files": [
+        "src/main.ts",
+        "src/license.ts"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "bridges separate communities"
+    },
+    {
+      "source": "archivePlan()",
+      "target": "savePlan()",
+      "source_files": [
+        "src/main.ts",
+        "src/db.ts"
       ],
       "confidence": "EXTRACTED",
       "relation": "calls",
@@ -307,29 +325,7 @@
     },
     {
       "source": "importFile()",
-      "target": "validateImport()",
-      "source_files": [
-        "src/main.ts",
-        "src/domain.ts"
-      ],
-      "confidence": "EXTRACTED",
-      "relation": "calls",
-      "why": "bridges separate communities"
-    },
-    {
-      "source": "init()",
-      "target": "loadData()",
-      "source_files": [
-        "src/main.ts",
-        "src/db.ts"
-      ],
-      "confidence": "EXTRACTED",
-      "relation": "calls",
-      "why": "bridges separate communities"
-    },
-    {
-      "source": "archivePlan()",
-      "target": "savePlan()",
+      "target": "replaceData()",
       "source_files": [
         "src/main.ts",
         "src/db.ts"
