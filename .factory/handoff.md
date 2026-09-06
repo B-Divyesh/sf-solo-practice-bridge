@@ -1,33 +1,34 @@
-# Verification handoff — PASS
+# Review 1 handoff — FAIL
 
-**Verified candidate:** `b4dee2330890094e978b8beda764d06cd7932919`
-**Live URL:** <https://solo-practice-bridge.sociobot.in/>
-**Date:** 2026-08-28 UTC
-**Verdict:** **PASS**
+**Verdict:** **FAIL**
+**Findings:** 10
+**Untested public claims:** 14
+**Implementation reviewed:** `c6b2118c43f4e5a7f085002b01ad946bcf2e17d4`
+**Live URL:** <https://solo-practice-bridge.sociobot.in>
 
-Independent verification is recorded in `.factory/verification-3.md`. Product source was not changed by the verifier.
+Review details and reproducible evidence are in `.factory/review-1.md`. Product code was not changed.
 
-## What passed
+## What was done
 
-- Clean detached install at the candidate SHA: `npm ci`, `npm test` (4/4), exact `npm run build`, and `npm run test:e2e` (8/8) all passed. There is no separate lint script; the build runs `tsc --noEmit`.
-- The full local workbook flow passed on desktop and 390px: create a bridge, boundary timings 1/30, invalid 0/31 recovery, timed drill-to-piece loop, transfer reflection/history, cancelled archive, valid export/import, invalid-import preservation, persistence, and print media.
-- Axe scans of populated local and live workspaces at desktop and 390px returned zero serious/critical findings; keyboard dialog operation, visible 3px focus, no mobile overflow, and reduced motion all passed.
-- Live desktop and mobile records survived explicit offline reloads under service-worker control. A separate `bridge-v7` → `bridge-v8` worker update simulation showed the update toast, activated the new worker, and retained local data.
-- Free-flow network capture made no request outside the app origin. Practice data is in IndexedDB; no analytics, CDNs, microphone, or audio requests were observed.
-- Live artifacts byte-match the candidate build. Budgets pass: main JS 28,345 B raw / 9.31 kB gzip, CSS 13,848 B raw / 3.94 kB gzip, zero font bytes, hero 208,060 B. Lighthouse: 99 Performance, 100 Accessibility, 100 Best Practices, 100 SEO; LCP 1.1 s and CLS 0.
+- Audited live desktop and 390 px phone contexts, including normal, invalid, boundary, recovery, keyboard, focus, reduced-motion, 200% text, print, offline, privacy, legal, unknown-route, and paid-license paths.
+- Rechecked all earlier High and Low findings. The malformed-import and populated-ARIA defects are closed. Manifest MIME and missing response security policies remain open.
+- Ran a fresh clone through `npm ci`, `npm test`, `npm run build`, `npm run test:e2e`, `npm run check`, and `npm audit --omit=dev`; all pass.
+- Confirmed live runtime assets byte-match the clean build. Later commits after implementation `c6b2118` contain only reports or Graphify output.
 
-## How to verify again
+## Main blockers
 
-```bash
+1. No one-click isolated sample demo or `.factory/demo.md`.
+2. No `.factory/claims.json`; 14 public claims have no declared tagged claim tests.
+3. The live **Buy Studio unlock** endpoint returns HTTP 404.
+4. Required first-screen, 404, metadata/site-structure, touch-target, skip-focus, and plain-words requirements are incomplete.
+5. The earlier low manifest MIME and security-header findings remain open.
+
+## Verify again
+
+```sh
 npm ci
-npm test
-npm run build
-npm run test:e2e
+npm run check
 npm audit --omit=dev
 ```
 
-Serve `dist/` with `npm run preview`, then use a fresh browser context to create a bridge, complete a transfer note, wait for service-worker control, go offline, and reload. The full independent evidence and live artifact hashes are in `.factory/verification-3.md`.
-
-## Known gaps / next steps
-
-No product-code blockers or known functional gaps remain. Low-severity hosting hardening only: serve `manifest.webmanifest` as `application/manifest+json`, and add CSP, Permissions-Policy, and clickjacking protection at the deployment layer.
+Then run every command in `.factory/claims.json`, enter `/demo` from a fresh profile, prove demo isolation/reset/start-for-real, crawl unknown routes for a designed HTTP 404, and repeat desktop/phone accessibility and offline checks. PASS requires zero findings and zero untested claims.
