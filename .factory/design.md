@@ -53,6 +53,8 @@ The hero is a generated editorial still life that makes the product mechanism vi
 
 Generated with the factory Azure image deployment via `/opt/fleet/lib/gen-image.sh` on 2026-08-28. The selected output is original to this product, reviewed for artifacts/marks, stored with its prompt sidecar in `assets/src/`, and exported to WebP in `public/assets/`. Generated imagery is disclosed in the product footer.
 
+The 1200×630 social preview at `public/assets/bridge-social.jpg` is a hand-cropped derivative of that reviewed hero asset. It adds no text, brands, or new generated material.
+
 ## Print
 
 Printing removes navigation, artwork, purchase UI, and controls; plans and session history render as black-on-white teacher-ready ledgers with expanded URLs avoided. Each plan begins intact where possible and includes the user's success cue and transfer notes.

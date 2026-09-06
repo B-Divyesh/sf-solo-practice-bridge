@@ -1,0 +1,107 @@
+[
+  {
+    "id": "practice-loop",
+    "claim": "Maps an observed piece obstacle through a timed drill, return-to-piece loop, and transfer record.",
+    "where": "Demo, practice workspace, README",
+    "test": "npm run test:e2e -- --project=desktop --grep @claim:practice-loop",
+    "sandbox": "Fresh /demo/ context; complete the populated sample loop and save a new transfer observation."
+  },
+  {
+    "id": "demo-isolation",
+    "claim": "Sample work stays in an isolated demo and never becomes real data.",
+    "where": "Landing action, Demo banner, README",
+    "test": "npm run test:e2e -- --project=desktop --grep @claim:demo-isolation",
+    "sandbox": "Fresh /demo/ context; add a sample note, reset it, start for real, and verify the real workbook is empty."
+  },
+  {
+    "id": "spaced-revisits",
+    "claim": "Adds four automatically spaced revisit dates to each practice bridge.",
+    "where": "Bridge card, How it works, README",
+    "test": "npm run test:e2e -- --project=desktop --grep @claim:spaced-revisits",
+    "sandbox": "Fresh /demo/ context; export the sample and measure the four date gaps in the user-visible backup."
+  },
+  {
+    "id": "local-persistence",
+    "claim": "Keeps plans and session notes in local browser storage after reload.",
+    "where": "Privacy page, README",
+    "test": "npm run test:e2e -- --project=desktop --grep @claim:local-persistence",
+    "sandbox": "Fresh /demo/ context; save a transfer note, reload, and find the saved note."
+  },
+  {
+    "id": "print-history",
+    "claim": "Prints the practice plan and transfer history in a teacher-ready layout.",
+    "where": "Print history control, README",
+    "test": "npm run test:e2e -- --project=desktop --grep @claim:print-history",
+    "sandbox": "Fresh /demo/ context; switch to print media and verify the populated plan and history remain while navigation is hidden."
+  },
+  {
+    "id": "json-backup",
+    "claim": "Exports and imports a JSON backup of plans and sessions.",
+    "where": "Your data controls, README",
+    "test": "npm run test:e2e -- --project=desktop --grep @claim:json-backup",
+    "sandbox": "Fresh /demo/ context; export, add a session, import the backup, and verify the later session is removed."
+  },
+  {
+    "id": "csv-history",
+    "claim": "Exports transfer history as CSV.",
+    "where": "Your data controls, README",
+    "test": "npm run test:e2e -- --project=desktop --grep @claim:csv-history",
+    "sandbox": "Fresh /demo/ context; download CSV and verify its header and sample transfer row."
+  },
+  {
+    "id": "pwa-install",
+    "claim": "Provides a standalone web-app manifest and service worker for installation.",
+    "where": "README",
+    "test": "npm run test:e2e -- --project=desktop --grep @claim:pwa-install",
+    "sandbox": "Fresh /demo/ context; wait for service-worker control and verify the fetched manifest has standalone display and both icon sizes."
+  },
+  {
+    "id": "offline-reload",
+    "claim": "Works offline after the first visit.",
+    "where": "Landing facts, README",
+    "test": "npm run test:e2e -- --project=desktop --grep @claim:offline-reload",
+    "sandbox": "Fresh /demo/ context; wait for service-worker control, set the context offline, reload, and find the sample plan."
+  },
+  {
+    "id": "update-notice",
+    "claim": "Shows an update notice when a new app version is ready.",
+    "where": "README",
+    "test": "npm run test:e2e -- --project=desktop --grep @claim:update-notice",
+    "sandbox": "Fresh /demo/ context; install the normal worker, register the next worker revision, and observe the notice."
+  },
+  {
+    "id": "local-privacy",
+    "claim": "Normal practice use keeps records in this browser and sends no outbound product requests.",
+    "where": "Landing facts, Privacy page, README",
+    "test": "npm run test:e2e -- --project=desktop --grep @claim:local-privacy",
+    "sandbox": "Fresh /demo/ context; record a transfer while capturing every request and allow only the product origin."
+  },
+  {
+    "id": "free-core",
+    "claim": "Free use includes one active bridge, unlimited sessions, printing, and exports.",
+    "where": "Studio panel, Terms, README",
+    "test": "npm run test:e2e -- --project=desktop --grep @claim:free-core",
+    "sandbox": "Fresh /demo/ context; attempt a second bridge and verify the Studio message while print and both exports stay enabled."
+  },
+  {
+    "id": "studio-availability",
+    "claim": "Studio checkout is unavailable until the product billing registration is complete.",
+    "where": "Landing facts, Studio panel, Terms",
+    "test": "npm run test:e2e -- --project=desktop --grep @claim:studio-availability",
+    "sandbox": "Fresh /demo/ context; verify the dependency notice and that no Buy Studio checkout link is offered."
+  },
+  {
+    "id": "license-restore",
+    "claim": "An eligible Studio license can be restored on another device.",
+    "where": "Studio panel, Terms",
+    "test": "npm run test:e2e -- --project=desktop --grep @claim:license-restore",
+    "sandbox": "Fresh /demo/ context; paste a token and use a recorded valid Sociobot verification response to observe the unlocked state."
+  },
+  {
+    "id": "scope-limits",
+    "claim": "Normal use never asks for microphone input or generates musical content; musicians write every musical instruction.",
+    "where": "Privacy and limits, Terms, README",
+    "test": "npm run test:e2e -- --project=desktop --grep @claim:scope-limits",
+    "sandbox": "Fresh /demo/ context; complete a loop with a tracked media API and assert no microphone request occurs."
+  }
+]

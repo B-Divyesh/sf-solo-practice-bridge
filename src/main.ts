@@ -1,10 +1,15 @@
 import './style.css';
 import { createPlan, FREE_ACTIVE_LIMIT, nextRevisit, SESSION_TARGET, sessionProgress, toCsv, validateImport } from './domain';
-import { loadData, replaceData, savePlan, saveSession } from './db';
-import { cachedLicense, captureLicenseFromUrl, checkoutUrl, clearLicense, isUnlocked, storeToken, verifyLicense } from './license';
+import { deleteData, loadData, replaceData, savePlan, saveSession, type StorageNamespace } from './db';
+import { sampleBridgeData } from './demo';
+import { cachedLicense, captureLicenseFromUrl, clearLicense, isUnlocked, storeToken, verifyLicense } from './license';
 import type { BridgeData, PracticePlan, PracticeSession } from './types';
 
 const app = document.querySelector<HTMLDivElement>('#app')!;
+const currentUrl = new URL(window.location.href);
+const isDemo = currentUrl.pathname === '/demo' || currentUrl.pathname.startsWith('/demo/') || currentUrl.searchParams.get('demo') === '1';
+const storageNamespace: StorageNamespace = isDemo ? 'demo' : 'real';
+const BUILD_ID = 'v1.1.0';
 
 let plans: PracticePlan[] = [];
 let sessions: PracticeSession[] = [];
@@ -24,58 +29,84 @@ const formatDateTime = (value: string): string => new Intl.DateTimeFormat(undefi
 const activePlans = (): PracticePlan[] => plans.filter((plan) => !plan.archived).sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
 
 function markup(): string {
+  const landing = isDemo ? `
+      <section class="demo-intro shell" aria-labelledby="demo-title">
+        <p class="eyebrow">Demo workspace</p>
+        <h1 id="demo-title">Sample practice plan</h1>
+        <p>Start a loop, add a note, export it, or reset it.</p>
+      </section>` : `
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="eyebrow">Private music practice workbook</p>
+          <h1 id="hero-title">Connect a drill to your piece</h1>
+          <p class="lede">For self-taught musicians without regular teacher feedback who need a modest plan for a piece they want to play.</p>
+          <div class="actions">
+            <a class="button primary" href="/demo/">Try it with sample data</a>
+            <span class="action-note">Opens a populated Autumn Leaves plan. Nothing is saved.</span>
+            <button type="button" data-action="new-plan">Build your own plan</button>
+            <a href="#how" class="text-link">See how it works</a>
+          </div>
+          <ul class="hero-facts" aria-label="Product facts"><li>Private: stays in this browser.</li><li>Offline: works after the first visit.</li><li>Price: free core. Studio checkout unavailable.</li></ul>
+        </div>
+        <div class="hero-visual">
+          <img src="/assets/bridge-hero.webp" width="1440" height="960" alt="Two rehearsal cards on concrete slabs joined by a small patch of moss" fetchpriority="high" decoding="async" />
+          <p class="image-note">You write every musical instruction.</p>
+        </div>
+      </section>`;
   return `
     <header class="site-header">
       <nav class="shell nav" aria-label="Main navigation">
         <a class="brand" href="/" aria-label="Solo Practice Bridge, home"><span class="brand-mark" aria-hidden="true"></span><span>Solo Practice Bridge</span></a>
+        <a href="/demo/"${isDemo ? ' aria-current="page"' : ''}>Demo</a>
         <a href="#workspace">Practice</a>
         <a href="#history">History</a>
-        <a href="#your-data">Your data</a>
+        <a href="/privacy/">Privacy</a>
         <span id="offline-flag" class="offline-flag" hidden>● Offline · changes stay here</span>
       </nav>
     </header>
-    <main id="main">
-      <section class="hero" aria-labelledby="hero-title">
-        <div class="hero-copy">
-          <p class="eyebrow">A private practice workbook — no AI, no listening</p>
-          <h1 id="hero-title">Make the drill meet the music.</h1>
-          <p class="lede">Name one snag in a piece you care about. Build a short drill for it, alternate back into the piece, and keep the transfer you actually noticed.</p>
-          <div class="actions">
-            <button class="primary" type="button" data-action="new-plan">Build a practice bridge</button>
-            <a href="#how" class="button">See the four-part loop</a>
-          </div>
-        </div>
-        <div class="hero-visual">
-          <img src="/assets/bridge-hero.webp" width="1440" height="960" alt="Two rehearsal cards on concrete slabs joined by a small patch of moss" fetchpriority="high" decoding="async" />
-          <p class="image-note">A small bridge, not a new syllabus. You write every musical instruction.</p>
-        </div>
-      </section>
+    ${isDemo ? `<aside class="demo-banner" aria-label="Demo controls"><div class="shell demo-banner-content"><p><strong>Demo — sample data, nothing is saved</strong><span>Use this separate sample workspace.</span></p><div><button type="button" data-action="reset-demo">Reset demo</button><button type="button" class="quiet" data-action="start-real">Start for real</button></div></div></aside>` : ''}
+    <main id="main" tabindex="-1">
+      ${landing}
 
-      <section id="workspace" class="workspace shell" aria-labelledby="workspace-title">
-        <div class="section-heading">
-          <div><p class="eyebrow">Your practice bench</p><h2 id="workspace-title">Current bridges</h2></div>
-          <button class="primary" type="button" data-action="new-plan">+ Build another</button>
+      <section id="workspace" class="workspace shell${isDemo ? ' demo-workspace' : ''}" aria-labelledby="workspace-title">
+        ${isDemo ? '<h2 id="workspace-title" class="visually-hidden">Current bridges</h2>' : `<div class="section-heading">
+          <div><p class="eyebrow">Your practice plan</p><h2 id="workspace-title">Current bridges</h2></div>
+          <button class="primary" type="button" data-action="new-plan">Build another bridge</button>
         </div>
-        <div id="status-strip" class="status-strip"></div>
+        <div id="status-strip" class="status-strip"></div>`}
         <div id="workspace-content" aria-live="polite"></div>
+        ${isDemo ? '<div class="demo-secondary-action"><button type="button" data-action="new-plan">Build another bridge</button></div>' : ''}
       </section>
 
       <section id="history" class="history" aria-labelledby="history-title">
         <div class="shell">
           <div class="section-heading">
-            <div><p class="eyebrow">Teacher-ready record</p><h2 id="history-title">What transferred</h2></div>
+            <div><p class="eyebrow">Practice history</p><h2 id="history-title">What transferred</h2></div>
             <button type="button" data-action="print">Print history</button>
           </div>
           <div id="history-content"></div>
         </div>
       </section>
 
-      <section id="how" class="ownership" aria-labelledby="ownership-title">
+      <section id="how" class="how-it-works" aria-labelledby="how-title">
+        <div class="shell">
+          <p class="eyebrow">How it works</p>
+          <h2 id="how-title">Build a short practice loop</h2>
+          <ol class="how-list">
+            <li><span>1</span><div><h3>Name one obstacle</h3><p>Write what interrupts a passage you already want to play.</p></div></li>
+            <li><span>2</span><div><h3>Alternate drill and piece</h3><p>Time a small drill, then return to the same passage.</p></div></li>
+            <li><span>3</span><div><h3>Record the transfer</h3><p>Save what changed, then use the planned revisit dates.</p></div></li>
+          </ol>
+        </div>
+      </section>
+
+      <section id="your-data" class="ownership" aria-labelledby="ownership-title">
         <div class="shell ownership-grid">
-          <div id="your-data">
-            <p class="eyebrow">Local by default</p>
-            <h2 id="ownership-title">Your notes stay yours.</h2>
-            <p>Plans and reflections live in this browser’s private storage. There is no account, microphone access, analytics, or cloud sync. Export a backup whenever you like.</p>
+          <div>
+            <p class="eyebrow">Privacy and limits</p>
+            <h2 id="ownership-title">Your practice records stay local</h2>
+            <p>Plans and reflections stay in this browser during normal use. There is no account, microphone access, analytics, or cloud sync.</p>
+            <p>This tool does not listen, grade audio, generate lessons, or replace a teacher.</p>
             <div class="utility-row">
               <button type="button" data-action="export-json">Export backup</button>
               <button type="button" data-action="export-csv">Export CSV</button>
@@ -88,7 +119,8 @@ function markup(): string {
     </main>
     <footer class="site-footer">
       <div class="shell footer-grid">
-        <p>Solo Practice Bridge is a planning and reflection tool, not a teacher or a pedagogical diagnosis. Generated editorial imagery is disclosed in the project’s design record.</p>
+        <p>Plan one drill-to-piece loop in this browser. Hero image was generated for this product.</p>
+        <p class="footer-meta">Built by Param Factory · ${BUILD_ID}</p>
         <nav class="footer-links" aria-label="Legal"><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></nav>
       </div>
     </footer>
@@ -113,8 +145,8 @@ function markup(): string {
       <div id="timer-content"></div>
     </dialog>
     <dialog id="license-dialog" aria-labelledby="license-dialog-title">
-      <div class="dialog-head"><div><h2 id="license-dialog-title">Studio unlock</h2><p>Keep more than one bridge active at a time.</p></div><button class="icon-button" type="button" data-close="license-dialog" aria-label="Close unlock details">×</button></div>
-      <div class="form-body"><p>Your free bridge and all its sessions remain available. Archive it to start another, or unlock unlimited active bridges for a one-time <strong>$12 purchase</strong>.</p><a class="button primary" href="${checkoutUrl}">Buy Studio unlock — $12 once</a><button type="button" class="quiet" data-close="license-dialog">Keep using free</button></div>
+      <div class="dialog-head"><div><h2 id="license-dialog-title">Studio unlock</h2><p>Studio adds unlimited active bridges.</p></div><button class="icon-button" type="button" data-close="license-dialog" aria-label="Close unlock details">×</button></div>
+      <div class="form-body"><p>Your free bridge and all recorded sessions remain available.</p><p>Checkout is unavailable while billing registration is completed.</p><button type="button" class="quiet" data-close="license-dialog">Keep using free</button></div>
     </dialog>
     <div id="live-region" class="visually-hidden" aria-live="polite" aria-atomic="true"></div>
     <div id="toast" class="toast" hidden></div>`;
@@ -132,7 +164,7 @@ function statusMarkup(): string {
 
 function planMarkup(plan: PracticePlan): string {
   const count = sessionProgress(sessions, plan.id);
-  const progress = Math.min(100, (count / SESSION_TARGET) * 100);
+  const progressStep = Math.min(count, SESSION_TARGET);
   return `
     <article class="plan-card" data-plan-id="${plan.id}">
       <div class="plan-head">
@@ -152,7 +184,7 @@ function planMarkup(plan: PracticePlan): string {
         </div>
       </div>
       <div class="practice-bar">
-        <div class="progress-wrap"><div class="progress-copy"><span>${count} sessions logged</span><span>${Math.min(count, SESSION_TARGET)} / ${SESSION_TARGET}</span></div><div class="progress-track" role="progressbar" aria-label="Sessions toward first target" aria-valuemin="0" aria-valuemax="8" aria-valuenow="${Math.min(count, SESSION_TARGET)}"><span class="progress-fill" style="width:${progress}%"></span></div></div>
+        <div class="progress-wrap"><div class="progress-copy"><span>${count} sessions logged</span><span>${progressStep} / ${SESSION_TARGET}</span></div><div class="progress-track" role="progressbar" aria-label="Sessions toward first target" aria-valuemin="0" aria-valuemax="8" aria-valuenow="${progressStep}"><span class="progress-fill progress-fill-${progressStep}"></span></div></div>
         <button class="primary" type="button" data-action="practice" data-id="${plan.id}">Start ${plan.drillMinutes + plan.pieceMinutes} min loop</button>
       </div>
     </article>`;
@@ -161,8 +193,8 @@ function planMarkup(plan: PracticePlan): string {
 function renderWorkspace(): void {
   const strip = document.querySelector('#status-strip');
   const content = document.querySelector('#workspace-content');
-  if (!strip || !content) return;
-  strip.innerHTML = statusMarkup();
+  if (!content) return;
+  if (strip) strip.innerHTML = statusMarkup();
   if (loadError) {
     content.innerHTML = `<div class="empty-state"><div class="empty-copy"><p class="eyebrow">Storage unavailable</p><h3>Your records could not be opened.</h3><p>${escapeHtml(loadError)} Check this browser’s site-storage settings, then reload. Nothing was sent elsewhere.</p><button type="button" data-action="reload">Reload the workbook</button></div></div>`;
     return;
@@ -195,7 +227,7 @@ function renderUnlock(): void {
     panel.innerHTML = `<p class="eyebrow">Studio unlocked</p><h3 id="unlock-title">Unlimited active bridges</h3><p>Your cached license is active. The free experience and your local data never depend on this check.</p><button type="button" data-action="remove-license" class="quiet">Remove license from this device</button>`;
     return;
   }
-  panel.innerHTML = `<p class="eyebrow">Optional one-time unlock</p><h3 id="unlock-title">Keep several pieces in motion.</h3><p>Free includes one active bridge, unlimited sessions, printing, and all exports. Studio adds unlimited active bridges.</p><p class="price">$12 · once</p>${state && !state.valid && state.checkedAt > 0 ? '<p class="form-error">This license is no longer active. Your records are safe.</p>' : ''}<a class="button primary" href="${checkoutUrl}">Buy Studio unlock</a><form id="restore-form" class="restore-form"><label for="license-token">Have a license?</label><div class="field-inline"><input id="license-token" name="license" autocomplete="off" required aria-describedby="license-hint" /><button type="submit">Verify license</button></div><p id="license-hint" class="hint">Paste the token from your receipt. Verification uses Sociobot’s billing service.</p><p id="license-error" class="form-error" role="alert"></p></form>`;
+  panel.innerHTML = `<p class="eyebrow">Studio unlock</p><h3 id="unlock-title">Unlimited active bridges</h3><p>Free includes one active bridge, unlimited sessions, printing, and all exports.</p><p>Studio checkout is unavailable while billing registration is completed.</p>${state && !state.valid && state.checkedAt > 0 ? '<p class="form-error">This license is no longer active. Your records are safe.</p>' : ''}<form id="restore-form" class="restore-form"><label for="license-token">Have an eligible license?</label><div class="field-inline"><input id="license-token" name="license" autocomplete="off" required aria-describedby="license-hint" /><button type="submit">Verify license</button></div><p id="license-hint" class="hint">Paste a token from your receipt. Verification contacts Sociobot billing.</p><p id="license-error" class="form-error" role="alert"></p></form>`;
 }
 
 function renderAll(): void {
@@ -254,7 +286,7 @@ async function submitPlan(form: HTMLFormElement): Promise<void> {
     });
     if (![plan.piece, plan.title, plan.obstacle, plan.drill, plan.successCue].every(Boolean)) throw new Error('Complete every musical field before saving.');
     if (![plan.drillMinutes, plan.pieceMinutes].every((value) => Number.isFinite(value) && value >= 1 && value <= 30)) throw new Error('Choose between 1 and 30 minutes for each part.');
-    await savePlan(plan);
+    await savePlan(plan, storageNamespace);
     plans.push(plan);
     renderAll();
     closeDialog('plan-dialog');
@@ -270,7 +302,7 @@ async function archivePlan(id: string): Promise<void> {
   if (!plan || !window.confirm(`Archive “${plan.piece}”? Its session history will stay in your record.`)) return;
   plan.archived = true;
   plan.updatedAt = new Date().toISOString();
-  await savePlan(plan);
+  await savePlan(plan, storageNamespace);
   renderAll();
   showToast(`Archived <strong>${escapeHtml(plan.piece)}</strong>.<br><button type="button" data-action="undo-archive" data-id="${plan.id}">Undo archive</button>`, 8000);
   announce(`${plan.piece} archived. You can undo this action.`);
@@ -281,7 +313,7 @@ async function undoArchive(id: string): Promise<void> {
   if (!plan) return;
   plan.archived = false;
   plan.updatedAt = new Date().toISOString();
-  await savePlan(plan);
+  await savePlan(plan, storageNamespace);
   renderAll();
   const toast = document.querySelector<HTMLElement>('#toast');
   if (toast) toast.hidden = true;
@@ -370,7 +402,7 @@ async function submitReflection(form: HTMLFormElement): Promise<void> {
   }
   try {
     const session: PracticeSession = { id: crypto.randomUUID(), planId: timer.plan.id, completedAt: new Date().toISOString(), transferNote, cueMet, durationSeconds: timer.elapsed };
-    await saveSession(session);
+    await saveSession(session, storageNamespace);
     sessions.push(session);
     closeDialog('timer-dialog');
     renderAll();
@@ -400,7 +432,7 @@ async function importFile(file: File): Promise<void> {
   try {
     const imported = validateImport(JSON.parse(await file.text()));
     if (!window.confirm(`Replace this browser’s records with ${imported.plans.length} plans and ${imported.sessions.length} sessions from the backup? Export first if you need the current records.`)) return;
-    await replaceData(imported);
+    await replaceData(imported, storageNamespace);
     plans = imported.plans;
     sessions = imported.sessions;
     renderAll();
@@ -408,6 +440,33 @@ async function importFile(file: File): Promise<void> {
   } catch (cause) {
     showToast(`<strong>Import did not work.</strong><br>${escapeHtml(cause instanceof Error ? cause.message : 'Choose a Solo Practice Bridge JSON backup.')}`);
   }
+}
+
+async function resetDemo(): Promise<void> {
+  if (!isDemo) return;
+  try {
+    await deleteData('demo');
+    const data = sampleBridgeData();
+    await replaceData(data, 'demo');
+    plans = data.plans;
+    sessions = data.sessions;
+    renderAll();
+    announce('Demo reset to the original sample plan.');
+  } catch (cause) {
+    showToast(`<strong>Demo reset did not work.</strong><br>${escapeHtml(cause instanceof Error ? cause.message : 'Try reloading the demo.')}`);
+  }
+}
+
+async function startForReal(): Promise<void> {
+  if (isDemo) {
+    try {
+      await deleteData('demo');
+    } catch {
+      showToast('<strong>Demo records could not be cleared.</strong><br>Close other demo tabs, then try again.', 0);
+      return;
+    }
+  }
+  window.location.assign('/');
 }
 
 async function restoreLicense(form: HTMLFormElement): Promise<void> {
@@ -445,6 +504,8 @@ function bindEvents(): void {
     else if (action === 'export-csv') download(`solo-practice-history-${new Date().toISOString().slice(0, 10)}.csv`, toCsv(plans, sessions), 'text/csv');
     else if (action === 'reload') window.location.reload();
     else if (action === 'remove-license') { if (window.confirm('Remove the Studio license from this device? Your practice records will not be changed.')) { clearLicense(); renderAll(); } }
+    else if (action === 'reset-demo') void resetDemo();
+    else if (action === 'start-real') void startForReal();
   });
   document.addEventListener('submit', (event) => {
     event.preventDefault();
@@ -460,6 +521,10 @@ function bindEvents(): void {
   document.querySelectorAll<HTMLDialogElement>('dialog').forEach((dialog) => {
     dialog.addEventListener('click', (event) => { if (event.target === dialog) closeDialog(dialog.id); });
   });
+  document.querySelector<HTMLAnchorElement>('.skip-link')?.addEventListener('click', (event) => {
+    event.preventDefault();
+    document.querySelector<HTMLElement>('#main')?.focus();
+  });
 }
 
 function setNetworkStatus(): void {
@@ -471,7 +536,8 @@ function setNetworkStatus(): void {
 
 async function registerServiceWorker(): Promise<void> {
   if (!('serviceWorker' in navigator)) return;
-  const registration = await navigator.serviceWorker.register('/sw.js');
+  const workerUrl = currentUrl.searchParams.get('test-update') === '1' ? '/sw.js?test-update=1' : '/sw.js';
+  const registration = await navigator.serviceWorker.register(workerUrl);
   if (registration.waiting) showUpdate(registration);
   registration.addEventListener('updatefound', () => {
     const worker = registration.installing;
@@ -487,13 +553,20 @@ function showUpdate(registration: ServiceWorkerRegistration): void {
 
 async function init(): Promise<void> {
   captureLicenseFromUrl();
+  if (isDemo) document.title = 'Demo — Solo Practice Bridge';
   app.innerHTML = markup();
   bindEvents();
   setNetworkStatus();
   window.addEventListener('online', setNetworkStatus);
   window.addEventListener('offline', setNetworkStatus);
   try {
-    ({ plans, sessions } = await loadData());
+    ({ plans, sessions } = await loadData(storageNamespace));
+    if (isDemo && plans.length === 0 && sessions.length === 0) {
+      const data = sampleBridgeData();
+      await replaceData(data, 'demo');
+      plans = data.plans;
+      sessions = data.sessions;
+    }
   } catch (cause) {
     loadError = cause instanceof Error ? cause.message : 'Local storage is unavailable.';
   }

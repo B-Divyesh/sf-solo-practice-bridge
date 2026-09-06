@@ -1,12 +1,14 @@
 import type { LicenseState } from './types';
 
 const SLUG = 'solo-practice-bridge';
-const TOKEN_KEY = `sb_license:${SLUG}`;
-const STATE_KEY = `sb_license_state:${SLUG}`;
+const isDemo = new URL(window.location.href).pathname === '/demo'
+  || new URL(window.location.href).pathname.startsWith('/demo/')
+  || new URL(window.location.href).searchParams.get('demo') === '1';
+const STORAGE_PREFIX = isDemo ? 'demo:' : '';
+const TOKEN_KEY = `${STORAGE_PREFIX}sb_license:${SLUG}`;
+const STATE_KEY = `${STORAGE_PREFIX}sb_license_state:${SLUG}`;
 const DAY = 86_400_000;
 const API_BASE = import.meta.env.VITE_BILLING_API || 'https://api.sociobot.in/api/v1';
-
-export const checkoutUrl = `${API_BASE}/products/${SLUG}/checkout`;
 
 export function captureLicenseFromUrl(): void {
   const url = new URL(window.location.href);

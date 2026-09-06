@@ -1,16 +1,44 @@
 <!doctype html>
 <html lang="en">
-  <head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><meta name="theme-color" content="#e8e5dc" /><title>Privacy — Solo Practice Bridge</title><link rel="icon" href="/icon-192.png" /></head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#e8e5dc" />
+    <meta name="description" content="Read how Solo Practice Bridge stores practice records and uses optional license verification." />
+    <link rel="canonical" href="https://solo-practice-bridge.sociobot.in/privacy/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Solo Practice Bridge" />
+    <meta property="og:title" content="Privacy — Solo Practice Bridge" />
+    <meta property="og:description" content="Read how Solo Practice Bridge stores practice records and uses optional license verification." />
+    <meta property="og:image" content="https://solo-practice-bridge.sociobot.in/assets/bridge-social.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Privacy — Solo Practice Bridge" />
+    <meta name="twitter:description" content="Read how Solo Practice Bridge stores practice records and uses optional license verification." />
+    <meta name="twitter:image" content="https://solo-practice-bridge.sociobot.in/assets/bridge-social.jpg" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <title>Privacy — Solo Practice Bridge</title>
+  </head>
   <body>
     <a class="skip-link" href="#main">Skip to privacy notice</a>
-    <header class="site-header"><nav class="shell nav" aria-label="Main navigation"><a class="brand" href="/"><span class="brand-mark" aria-hidden="true"></span><span>Solo Practice Bridge</span></a><a href="/">Back to practice</a></nav></header>
-    <main id="main" class="legal-main"><p class="eyebrow">Effective 28 August 2026</p><h1>Privacy, in plain terms.</h1><p>Solo Practice Bridge is designed to work without an account. Your repertoire plans, obstacles, drills, success cues, and session reflections are stored in IndexedDB in your browser. They are not transmitted to us.</p>
-      <h2>What stays on your device</h2><p>All practice records stay in local browser storage unless you explicitly export a JSON or CSV file. Removing site data, using private browsing, or losing the device may erase them, so exports are the available backup mechanism. There is no analytics, advertising, microphone access, audio grading, or cross-device sync.</p>
-      <h2>License verification</h2><p>If you buy or restore the optional Studio unlock, the license token is stored in localStorage and sent to Sociobot’s billing API to verify that it is valid for this product. The API returns license status and may process normal server security logs such as IP address and request time. Sociobot/Dodo is the merchant of record for checkout. The free experience never requires this request.</p>
-      <h2>Your choices</h2><p>Export your records from “Your data.” Clear this site’s storage in your browser to delete local records. Remove a license in the unlock panel. Because practice data does not reach our servers, we cannot recover it or identify it for you.</p>
-      <h2>Contact</h2><p>For product privacy questions, contact <a href="mailto:privacy@sociobot.in">privacy@sociobot.in</a>. This notice may change if storage or paid features change; the effective date above will be updated.</p>
+    <header class="site-header"><nav class="shell nav" aria-label="Main navigation"><a class="brand" href="/"><span class="brand-mark" aria-hidden="true"></span><span>Solo Practice Bridge</span></a><a href="/demo/">Demo</a><a href="/#workspace">Practice</a><a href="/#history">History</a><a href="/privacy/" aria-current="page">Privacy</a></nav></header>
+    <main id="main" class="legal-main" tabindex="-1">
+      <p class="eyebrow">Effective 6 September 2026</p>
+      <h1>Privacy, in plain terms</h1>
+      <p>Solo Practice Bridge works without an account. Your plans and reflections stay in IndexedDB in this browser.</p>
+      <h2>What stays on your device</h2>
+      <p>Normal use sends no practice records to us. There is no analytics, advertising, microphone access, audio grading, or cloud sync.</p>
+      <p>Export JSON or CSV when you want a copy. Clearing site data, private browsing, or losing a device can erase local records.</p>
+      <h2>License verification</h2>
+      <p>If you restore an eligible Studio license, its token stays in localStorage. The app sends that token to Sociobot billing for verification.</p>
+      <p>The free workbook never needs this request. Checkout remains unavailable until billing registration is complete.</p>
+      <h2>Your choices</h2>
+      <p>Export records from Your data. Clear this site’s storage to delete local records. Remove a saved license in the unlock panel.</p>
+      <p>We cannot recover records that stay only in your browser.</p>
+      <h2>Contact</h2>
+      <p>For privacy questions, contact <a href="mailto:privacy@sociobot.in">privacy@sociobot.in</a>.</p>
     </main>
-    <footer class="site-footer"><div class="shell footer-grid"><p>Private by default. No account and no lesson surveillance.</p><nav class="footer-links" aria-label="Legal"><a href="/privacy/" aria-current="page">Privacy</a><a href="/terms/">Terms</a></nav></div></footer>
+    <footer class="site-footer"><div class="shell footer-grid"><p>Plan one drill-to-piece loop in this browser. Hero image was generated for this product.</p><p class="footer-meta">Built by Param Factory · v1.1.0</p><nav class="footer-links" aria-label="Legal"><a href="/privacy/" aria-current="page">Privacy</a><a href="/terms/">Terms</a></nav></div></footer>
     <script type="module" src="/src/legal.ts"></script>
   </body>
 </html>

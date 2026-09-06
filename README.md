@@ -1,45 +1,55 @@
 # Solo Practice Bridge
 
-Solo Practice Bridge is a private, local-first practice workbook for intermediate self-taught musicians. It connects one observed problem in a piece to a short, user-authored drill, alternates the drill back into the piece, and records whether the change transferred. It does not listen, grade audio, generate lessons, or replace a teacher.
+Solo Practice Bridge helps self-taught musicians connect a short drill to a piece they want to play. It is a private, local-first practice workbook.
 
-Live: <https://solo-practice-bridge.sociobot.in>
+Try the populated sandbox at <https://solo-practice-bridge.sociobot.in/demo/>. Demo records use separate storage and never change real records.
 
-## What v1 includes
+## What it does
 
-- One-piece / one-obstacle practice plans with timed drill-to-piece alternation
-- User-defined success cues and automatically spaced revisit dates
-- Persistent IndexedDB plans and session reflections
-- Printable teacher-ready history plus JSON backup/import and CSV export
-- Installable offline PWA with an explicit offline state and update prompt
-- A complete free tier; optional $12 one-time Studio license adds unlimited simultaneously active bridges
-- Directly addressable privacy and terms pages
+- Maps one observed piece obstacle through a timed drill, piece return, and transfer note.
+- Adds four spaced revisit dates to every bridge.
+- Keeps plans and session notes in local browser storage after reload.
+- Prints practice plans and transfer history.
+- Exports JSON backups and CSV history.
+- Provides a standalone web-app manifest and service worker.
+- Works offline after the first visit.
+- Shows a notice when a new worker version is ready.
+- Keeps normal practice traffic on the product origin.
+- Includes one active bridge, unlimited sessions, printing, and exports for free.
+- Does not request microphone input during normal practice use.
 
-All musical content is entered by the musician. Practice data never leaves the browser. Only optional license verification contacts the Sociobot billing API.
+Studio is a one-time unlimited-bridges license. Checkout is currently unavailable while its billing registration is completed. An eligible license can still be restored with Sociobot verification.
+
+The workbook does not listen, grade audio, generate lessons, or replace a teacher. Musicians enter every musical instruction.
 
 ## Run locally
 
-Requires Node.js 22+.
+Requires Node.js 22 or later.
 
 ```sh
 npm ci
 npm run dev
 ```
 
-Open the printed local URL. No environment variables are needed for the free product. Set `VITE_BILLING_API` only to point a staging build at the factory’s pilot billing API.
+Open the printed local URL. Use `/demo/` for sample data. No environment variables are needed for the free workbook.
 
 ## Test and build
 
 ```sh
-npm test          # unit tests
-npm run build     # reproducible static output in ./dist
-npm run test:e2e  # Chromium desktop/mobile, accessibility, and offline checks
-npm run check     # all of the above
+npm test
+npm run build
+npm run test:e2e
+npm run check
 ```
 
-Playwright is pinned to 1.58.2. Its Chromium browser must be installed or available via `PLAYWRIGHT_BROWSERS_PATH`.
+Playwright is pinned to 1.58.2. Chromium must be installed or available through `PLAYWRIGHT_BROWSERS_PATH`.
+
+Every public claim is listed in [`.factory/claims.json`](.factory/claims.json). From a clean setup, run `npm ci`, `npm run build`, then every listed claim command.
 
 ## Deploy
 
-Deploy the contents of `dist/` as a static site with clean-directory routes enabled. `dist/index.html` is the entry point, while `dist/privacy/index.html` and `dist/terms/index.html` are standalone legal pages. Do not configure billing, DNS, or secrets in this repository.
+Deploy `dist/` as a static site. Keep directory routes for `/demo/`, `/privacy/`, and `/terms/`. Serve `staticwebapp.config.json` with the output for security headers, manifest MIME, and the designed HTTP 404 page.
 
-The researched scope is in [`.factory/brief.json`](.factory/brief.json), the product-specific visual and asset record is in [`.factory/design.md`](.factory/design.md), and build verification is recorded in [`.factory/handoff.md`](.factory/handoff.md).
+Do not configure billing, DNS, or secrets in this repository. The separate billing operator must complete Studio registration before checkout is enabled.
+
+The researched scope is in [`.factory/brief.json`](.factory/brief.json). The visual system and asset provenance are in [`.factory/design.md`](.factory/design.md). Demo isolation is documented in [`.factory/demo.md`](.factory/demo.md).

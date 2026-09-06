@@ -1,25 +1,28 @@
-const VERSION = 'bridge-v7';
+const VERSION = new URL(self.location.href).searchParams.has('test-update') ? 'bridge-v8-test' : 'bridge-v8';
 const SHELL = `${VERSION}-shell`;
 const RUNTIME = `${VERSION}-runtime`;
-const PRECACHE = ['/?v=1', '/offline.html', '/manifest.webmanifest', '/icon-192.png', '/icon-512.png', '/assets/bridge-hero.webp', '/assets/main.js', '/assets/legal.js', '/assets/style.js', '/assets/style.css'];
+const PAGES = ['/', '/demo/', '/privacy/', '/terms/', '/404.html'];
+const STATIC_FILES = ['/offline.html', '/manifest.webmanifest', '/favicon.svg', '/icon-192.png', '/icon-512.png', '/apple-touch-icon.png', '/assets/bridge-hero.webp', '/assets/bridge-social.jpg'];
+
+async function addFresh(cache, path) {
+  const response = await fetch(new Request(path, { cache: 'reload' }));
+  if (!response.ok) throw new Error(`Could not precache ${path}`);
+  await cache.put(path, response);
+}
 
 async function precacheShell() {
   const cache = await caches.open(SHELL);
-  const addFresh = async (path) => {
+  await Promise.all(STATIC_FILES.map((path) => addFresh(cache, path)));
+  await Promise.all(PAGES.map(async (path) => {
     const response = await fetch(new Request(path, { cache: 'reload' }));
     if (!response.ok) throw new Error(`Could not precache ${path}`);
-    await cache.put(path, response);
-  };
-  await Promise.all(PRECACHE.map(addFresh));
-  for (const path of ['/', '/privacy/', '/terms/']) {
-    const response = await fetch(new Request(path, { cache: 'reload' }));
     await cache.put(path, response.clone());
     const html = await response.text();
     const resources = [...html.matchAll(/(?:src|href)="([^"]+)"/g)]
       .map((match) => match[1])
-      .filter((url) => url && url.startsWith('/') && !url.startsWith('/#'));
-    await Promise.all([...new Set(resources)].map(addFresh));
-  }
+      .filter((url) => url.startsWith('/') && !url.startsWith('/#') && !url.endsWith('/manifest.webmanifest'));
+    await Promise.all([...new Set(resources)].map((path) => addFresh(cache, path)));
+  }));
 }
 
 self.addEventListener('install', (event) => {
@@ -48,7 +51,10 @@ self.addEventListener('fetch', (event) => {
       const copy = response.clone();
       caches.open(RUNTIME).then((cache) => cache.put(request, copy));
       return response;
-    }).catch(async () => (await caches.match(request, { ignoreVary: true })) || (await caches.match('/', { ignoreVary: true })) || caches.match('/offline.html', { ignoreVary: true })));
+    }).catch(async () => {
+      if (url.pathname === '/demo') return (await caches.match('/demo/', { ignoreVary: true })) || caches.match('/offline.html', { ignoreVary: true });
+      return (await caches.match(request, { ignoreVary: true })) || (await caches.match('/', { ignoreVary: true })) || caches.match('/offline.html', { ignoreVary: true });
+    }));
     return;
   }
 
