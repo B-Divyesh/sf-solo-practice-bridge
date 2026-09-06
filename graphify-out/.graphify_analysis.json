@@ -1,33 +1,45 @@
 {
   "communities": {
     "0": [
-      "src_domain",
-      "src_domain_createplan",
-      "src_domain_escapecsv",
-      "src_domain_free_active_limit",
-      "src_domain_isisodate",
-      "src_domain_isisodatetime",
-      "src_domain_isnonemptystring",
-      "src_domain_ispracticeplan",
-      "src_domain_ispracticesession",
-      "src_domain_isrecord",
-      "src_domain_istext",
-      "src_domain_iswholenumberinrange",
-      "src_domain_makerevisitdates",
-      "src_domain_nextrevisit",
-      "src_domain_session_target",
-      "src_domain_sessionprogress",
-      "src_domain_tocsv",
-      "src_domain_validateimport",
-      "src_main_formatdate",
-      "src_main_planmarkup",
-      "src_types",
-      "src_types_bridgedata",
-      "src_types_practiceplan",
-      "src_types_practicesession",
-      "tests_domain_test",
-      "tests_domain_test_plan",
-      "tests_domain_test_session"
+      "src_license_capturelicensefromurl",
+      "src_license_clearlicense",
+      "src_license_storetoken",
+      "src_main",
+      "src_main_advancetimer",
+      "src_main_announce",
+      "src_main_archiveplan",
+      "src_main_bindevents",
+      "src_main_closedialog",
+      "src_main_currenturl",
+      "src_main_download",
+      "src_main_escapehtml",
+      "src_main_exportjson",
+      "src_main_formatclock",
+      "src_main_formatdatetime",
+      "src_main_importfile",
+      "src_main_init",
+      "src_main_markup",
+      "src_main_opendialog",
+      "src_main_opennewplan",
+      "src_main_opentimer",
+      "src_main_plans",
+      "src_main_registerserviceworker",
+      "src_main_renderall",
+      "src_main_renderhistory",
+      "src_main_rendertimer",
+      "src_main_resetdemo",
+      "src_main_restorelicense",
+      "src_main_sessions",
+      "src_main_setnetworkstatus",
+      "src_main_showtoast",
+      "src_main_showupdate",
+      "src_main_startforreal",
+      "src_main_stoptimer",
+      "src_main_submitplan",
+      "src_main_submitreflection",
+      "src_main_tick",
+      "src_main_toggletimer",
+      "src_main_undoarchive"
     ],
     "1": [
       "ref_dom",
@@ -57,6 +69,33 @@
       "tsconfig_include"
     ],
     "2": [
+      "src_demo",
+      "src_demo_samplebridgedata",
+      "src_domain",
+      "src_domain_createplan",
+      "src_domain_escapecsv",
+      "src_domain_free_active_limit",
+      "src_domain_isisodate",
+      "src_domain_isisodatetime",
+      "src_domain_isnonemptystring",
+      "src_domain_ispracticeplan",
+      "src_domain_ispracticesession",
+      "src_domain_isrecord",
+      "src_domain_istext",
+      "src_domain_iswholenumberinrange",
+      "src_domain_makerevisitdates",
+      "src_domain_session_target",
+      "src_domain_tocsv",
+      "src_domain_validateimport",
+      "src_types",
+      "src_types_bridgedata",
+      "src_types_practiceplan",
+      "src_types_practicesession",
+      "tests_domain_test",
+      "tests_domain_test_plan",
+      "tests_domain_test_session"
+    ],
+    "3": [
       "package",
       "package_axe_core_playwright_playwright_core",
       "package_name",
@@ -73,7 +112,7 @@
       "package_type",
       "package_version"
     ],
-    "3": [
+    "4": [
       "axe_core_playwright",
       "package_devdependencies",
       "package_devdependencies_axe_core_playwright",
@@ -88,117 +127,114 @@
       "vite",
       "vitest"
     ],
-    "4": [
-      "src_main",
-      "src_main_activeplans",
-      "src_main_escapehtml",
-      "src_main_formatdatetime",
-      "src_main_opendialog",
-      "src_main_opennewplan",
-      "src_main_opentimer",
-      "src_main_plans",
-      "src_main_renderhistory",
-      "src_main_renderworkspace",
-      "src_main_sessions",
-      "src_main_statusmarkup",
-      "src_main_stoptimer"
-    ],
     "5": [
-      "src_main_announce",
-      "src_main_archiveplan",
-      "src_main_bindevents",
-      "src_main_closedialog",
-      "src_main_download",
-      "src_main_exportjson",
-      "src_main_importfile",
-      "src_main_renderall",
-      "src_main_restorelicense",
-      "src_main_submitplan",
-      "src_main_submitreflection",
-      "src_main_undoarchive"
+      "public_manifest",
+      "public_manifest_background_color",
+      "public_manifest_description",
+      "public_manifest_display",
+      "public_manifest_icons",
+      "public_manifest_id",
+      "public_manifest_name",
+      "public_manifest_orientation",
+      "public_manifest_scope",
+      "public_manifest_short_name",
+      "public_manifest_start_url",
+      "public_manifest_theme_color"
     ],
     "6": [
-      "src_license",
-      "src_license_cachedlicense",
-      "src_license_capturelicensefromurl",
-      "src_license_checkouturl",
-      "src_license_clearlicense",
-      "src_license_isunlocked",
-      "src_license_storedtoken",
-      "src_license_storetoken",
-      "src_license_verifylicense",
-      "src_main_renderunlock",
-      "src_types_licensestate"
-    ],
-    "7": [
       "src_db",
       "src_db_complete",
+      "src_db_databasename",
+      "src_db_deletedata",
       "src_db_loaddata",
       "src_db_opendatabase",
       "src_db_readall",
       "src_db_replacedata",
       "src_db_saveplan",
-      "src_db_savesession"
+      "src_db_savesession",
+      "src_db_storagenamespace"
+    ],
+    "7": [
+      "src_domain_nextrevisit",
+      "src_domain_sessionprogress",
+      "src_main_activeplans",
+      "src_main_formatdate",
+      "src_main_planmarkup",
+      "src_main_renderworkspace",
+      "src_main_statusmarkup"
     ],
     "8": [
-      "src_main_init",
-      "src_main_markup",
-      "src_main_registerserviceworker",
-      "src_main_setnetworkstatus",
-      "src_main_showtoast",
-      "src_main_showupdate"
+      "src_license",
+      "src_license_cachedlicense",
+      "src_license_isunlocked",
+      "src_license_storedtoken",
+      "src_license_verifylicense",
+      "src_main_renderunlock",
+      "src_types_licensestate"
     ],
     "9": [
-      "src_main_advancetimer",
-      "src_main_formatclock",
-      "src_main_rendertimer",
-      "src_main_tick",
-      "src_main_toggletimer"
+      "scripts_serve_dist",
+      "scripts_serve_dist_headers",
+      "scripts_serve_dist_port",
+      "scripts_serve_dist_root",
+      "scripts_serve_dist_safefile",
+      "scripts_serve_dist_types"
     ],
     "10": [
       "public_sw",
-      "public_sw_precache",
-      "public_sw_precacheshell"
+      "public_sw_addfresh",
+      "public_sw_pages",
+      "public_sw_precacheshell",
+      "public_sw_static_files"
     ],
     "11": [
-      "playwright_config"
+      "tests_e2e_claims_spec",
+      "tests_e2e_claims_spec_downloadedtext",
+      "tests_e2e_claims_spec_opendemo",
+      "tests_e2e_claims_spec_recorddemotransfer"
     ],
     "12": [
-      "src_legal"
+      "test",
+      "tests_e2e_app_spec",
+      "tests_e2e_app_spec_createbridge"
     ],
     "13": [
-      "tests_e2e_app_spec"
+      "playwright_config"
     ],
     "14": [
-      "vite_config"
+      "src_legal"
     ],
     "15": [
+      "vite_config"
+    ],
+    "16": [
       "vitest_config"
     ]
   },
   "cohesion": {
-    "0": 0.16524216524216523,
+    "0": 0.14304993252361672,
     "1": 0.08,
-    "2": 0.13333333333333333,
-    "3": 0.15384615384615385,
-    "4": 0.28205128205128205,
-    "5": 0.3939393939393939,
-    "6": 0.2727272727272727,
-    "7": 0.5357142857142857,
-    "8": 0.3333333333333333,
-    "9": 0.6,
-    "10": 0.6666666666666666,
-    "11": 1.0,
-    "12": 1.0,
+    "2": 0.19666666666666666,
+    "3": 0.13333333333333333,
+    "4": 0.15384615384615385,
+    "5": 0.16666666666666666,
+    "6": 0.36363636363636365,
+    "7": 0.38095238095238093,
+    "8": 0.5238095238095238,
+    "9": 0.3333333333333333,
+    "10": 0.5,
+    "11": 0.5,
+    "12": 0.6666666666666666,
     "13": 1.0,
     "14": 1.0,
-    "15": 1.0
+    "15": 1.0,
+    "16": 1.0
   },
   "gods": [
     {
       "id": "src_main_bindevents",
       "label": "bindEvents()",
-      "degree": 18
+      "degree": 20
     },
     {
       "id": "tsconfig_compileroptions",
@@ -208,16 +244,21 @@
     {
       "id": "src_main_renderall",
       "label": "renderAll()",
-      "degree": 12
+      "degree": 13
     },
     {
       "id": "src_main_announce",
       "label": "announce()",
-      "degree": 10
+      "degree": 11
     },
     {
       "id": "src_main_init",
       "label": "init()",
+      "degree": 11
+    },
+    {
+      "id": "src_main_resetdemo",
+      "label": "resetDemo()",
       "degree": 9
     },
     {
@@ -231,36 +272,20 @@
       "degree": 8
     },
     {
-      "id": "src_main_importfile",
-      "label": "importFile()",
+      "id": "src_main_escapehtml",
+      "label": "escapeHtml()",
       "degree": 8
     },
     {
-      "id": "src_domain_ispracticesession",
-      "label": "isPracticeSession()",
-      "degree": 7
-    },
-    {
-      "id": "src_main_escapehtml",
-      "label": "escapeHtml()",
-      "degree": 7
+      "id": "src_main_importfile",
+      "label": "importFile()",
+      "degree": 8
     }
   ],
   "surprises": [
     {
       "source": "submitPlan()",
       "target": "createPlan()",
-      "source_files": [
-        "src/main.ts",
-        "src/domain.ts"
-      ],
-      "confidence": "EXTRACTED",
-      "relation": "calls",
-      "why": "bridges separate communities"
-    },
-    {
-      "source": "statusMarkup()",
-      "target": "nextRevisit()",
       "source_files": [
         "src/main.ts",
         "src/domain.ts"
@@ -292,11 +317,22 @@
       "why": "bridges separate communities"
     },
     {
-      "source": "openNewPlan()",
-      "target": "isUnlocked()",
+      "source": "init()",
+      "target": "loadData()",
       "source_files": [
         "src/main.ts",
-        "src/license.ts"
+        "src/db.ts"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "bridges separate communities"
+    },
+    {
+      "source": "archivePlan()",
+      "target": "savePlan()",
+      "source_files": [
+        "src/main.ts",
+        "src/db.ts"
       ],
       "confidence": "EXTRACTED",
       "relation": "calls",
