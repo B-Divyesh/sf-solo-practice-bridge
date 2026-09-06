@@ -1,6 +1,6 @@
 # Repair 3 handoff — PASS except external billing registration
 
-**Implementation SHA:** `eedac19e77524da051ebef63b51379819edb4dcc`
+**Implementation SHA:** `9e610dd6bcf55ea5620723c1b3b5777af007025b`
 **Prior reviewed implementation:** `c6b2118c43f4e5a7f085002b01ad946bcf2e17d4`
 **Live URL:** <https://solo-practice-bridge.sociobot.in>
 **Deployed:** 2026-09-06 UTC
