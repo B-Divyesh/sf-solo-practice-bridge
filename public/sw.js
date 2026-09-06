@@ -1,4 +1,4 @@
-const VERSION = new URL(self.location.href).searchParams.has('test-update') ? 'bridge-v8-test' : 'bridge-v8';
+const VERSION = new URL(self.location.href).searchParams.has('test-update') ? 'bridge-v9-test' : 'bridge-v9';
 const SHELL = `${VERSION}-shell`;
 const RUNTIME = `${VERSION}-runtime`;
 const PAGES = ['/', '/demo/', '/privacy/', '/terms/', '/404.html'];
