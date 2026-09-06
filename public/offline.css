@@ -1,0 +1,7 @@
+* { box-sizing: border-box; }
+body { display: grid; min-height: 100vh; margin: 0; place-items: center; padding: 24px; background: #e8e5dc; color: #1d211c; font: 18px/1.55 Arial, sans-serif; }
+main { max-width: 640px; padding: clamp(28px, 7vw, 64px); border: 3px solid #1d211c; background: #f7f5ed; box-shadow: 8px 8px 0 #355f3b; }
+h1 { margin: 0 0 24px; font: 600 clamp(2.8rem, 10vw, 5.5rem)/1 Georgia, serif; letter-spacing: -.04em; }
+a { display: inline-flex; align-items: center; min-height: 44px; margin-top: 16px; padding: 11px 16px; border: 2px solid #1d211c; background: #355f3b; box-shadow: 4px 4px 0 #1d211c; color: #fff; font-weight: 700; text-decoration: none; }
+a:focus-visible { outline: 3px solid #9b3f2f; outline-offset: 3px; }
+.eyebrow { margin: 0 0 12px; color: #234329; font: 800 .82rem/1 ui-monospace, monospace; letter-spacing: .12em; text-transform: uppercase; }

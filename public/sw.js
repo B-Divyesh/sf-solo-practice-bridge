@@ -2,7 +2,7 @@ const VERSION = new URL(self.location.href).searchParams.has('test-update') ? 'b
 const SHELL = `${VERSION}-shell`;
 const RUNTIME = `${VERSION}-runtime`;
 const PAGES = ['/', '/demo/', '/privacy/', '/terms/', '/404.html'];
-const STATIC_FILES = ['/offline.html', '/manifest.webmanifest', '/favicon.svg', '/icon-192.png', '/icon-512.png', '/apple-touch-icon.png', '/assets/bridge-hero.webp', '/assets/bridge-social.jpg'];
+const STATIC_FILES = ['/offline.html', '/manifest.json', '/favicon.svg', '/icon-192.png', '/icon-512.png', '/apple-touch-icon.png', '/assets/bridge-hero.webp', '/assets/bridge-social.jpg'];
 
 async function addFresh(cache, path) {
   const response = await fetch(new Request(path, { cache: 'reload' }));
@@ -20,7 +20,7 @@ async function precacheShell() {
     const html = await response.text();
     const resources = [...html.matchAll(/(?:src|href)="([^"]+)"/g)]
       .map((match) => match[1])
-      .filter((url) => url.startsWith('/') && !url.startsWith('/#') && !url.endsWith('/manifest.webmanifest'));
+      .filter((url) => url.startsWith('/') && !url.startsWith('/#') && !url.endsWith('/manifest.json'));
     await Promise.all([...new Set(resources)].map((path) => addFresh(cache, path)));
   }));
 }

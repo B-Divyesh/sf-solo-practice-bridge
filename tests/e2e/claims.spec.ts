@@ -98,7 +98,7 @@ test('@claim:pwa-install exposes an installable manifest and active service work
   await page.evaluate(() => navigator.serviceWorker.ready);
   await page.waitForFunction(() => Boolean(navigator.serviceWorker.controller));
   const manifest = await page.evaluate(async () => {
-    const response = await fetch('/manifest.webmanifest');
+    const response = await fetch('/manifest.json');
     return response.json() as Promise<{ display: string; start_url: string; icons: Array<{ sizes: string }> }>;
   });
   expect(manifest.display).toBe('standalone');
